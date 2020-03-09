@@ -4,16 +4,22 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class GlobalComparatorService {
     private RestTemplate restTemplate= new RestTemplateBuilder().build();
 
-    public void processComparatorRequest(ComparatorRequest request){
-        System.out.println(getCOLData(request));
-        System.out.println(SALCalculatorData1(request));
-        System.out.println(SALCalculatorData2(request));
-        System.out.println(COLComparatorGetIndices1(request));
-        System.out.println(COLComparatorGetIndices2(request));
+    public List<String> processComparatorRequest(ComparatorRequest request){
+        List<String> data = new ArrayList<>();
+        data.add(getCOLData(request));
+        data.add(SALCalculatorData1(request));
+        data.add(SALCalculatorData2(request));
+        data.add(COLComparatorGetIndices1(request));
+        data.add(COLComparatorGetIndices2(request));
+        data.add(COLComparatorGetCityPrices(request));
+        return data;
     }
 
     private String getCOLData(ComparatorRequest request){
@@ -40,6 +46,11 @@ public class GlobalComparatorService {
 
     private String COLComparatorGetIndices2(ComparatorRequest request){
         String URL="http://localhost:8081/indices?city="+request.getCity2()+"&country="+request.getCountry2();
+        return this.restTemplate.getForObject(URL, String.class);
+    }
+
+    private String COLComparatorGetCityPrices(ComparatorRequest request){
+        String URL="http://localhost:8081/cityPrices?city="+request.getCity1()+"&country="+request.getCountry1();
         return this.restTemplate.getForObject(URL, String.class);
     }
 }
