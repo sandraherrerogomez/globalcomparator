@@ -18,7 +18,8 @@ public class GlobalComparatorService {
         data.add(SALCalculatorData2(request));
         data.add(COLComparatorGetIndices1(request));
         data.add(COLComparatorGetIndices2(request));
-        data.add(COLComparatorGetCityPrices(request));
+        data.add(COLComparatorGetCityPrices1(request));
+        data.add(COLComparatorGetCityPrices2(request));
         return data;
     }
 
@@ -49,8 +50,13 @@ public class GlobalComparatorService {
         return this.restTemplate.getForObject(URL, String.class);
     }
 
-    private String COLComparatorGetCityPrices(ComparatorRequest request){
+    private String COLComparatorGetCityPrices1(ComparatorRequest request){
         String URL="http://localhost:8081/cityPrices?city="+request.getCity1()+"&country="+request.getCountry1();
+        return this.restTemplate.getForObject(URL, String.class);
+    }
+
+    private String COLComparatorGetCityPrices2(ComparatorRequest request){
+        String URL="http://localhost:8081/cityPrices?city="+request.getCity2()+"&country="+request.getCountry2();
         return this.restTemplate.getForObject(URL, String.class);
     }
 }
