@@ -20,4 +20,10 @@ public class GlobalComparatorController {
         public List<String> getCityData(@RequestBody ComparatorRequest request){
                return gbComparatorsvc.processComparatorRequest(request);
         }
+
+        @GetMapping("cities")
+        @CrossOrigin
+        public String getCities(){
+               return gbComparatorsvc.COLComparatorListAvailableCities();
+        }
 }

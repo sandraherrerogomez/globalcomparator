@@ -59,4 +59,9 @@ public class GlobalComparatorService {
         String URL="http://localhost:8081/cityPrices?city="+request.getCity2()+"&country="+request.getCountry2();
         return this.restTemplate.getForObject(URL, String.class);
     }
+
+    public String COLComparatorListAvailableCities(){
+        String URL="http://localhost:8081/cities";
+        return this.restTemplate.getForObject(URL, String.class);
+    }
 }
