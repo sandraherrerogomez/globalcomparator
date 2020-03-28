@@ -1,5 +1,6 @@
 package com.globalcomparator.globalcomparator.service;
 import com.globalcomparator.globalcomparator.model.ComparatorRequest;
+import com.globalcomparator.globalcomparator.model.NumbeoData;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class GlobalComparatorService {
 
     public List<String> processComparatorRequest(ComparatorRequest request){
         List<String> data = new ArrayList<>();
-        data.add(getCOLData(request));
+        //data.add(getCOLData(request));
         data.add(SALCalculatorData1(request));
         data.add(SALCalculatorData2(request));
         data.add(COLComparatorGetIndices1(request));
@@ -25,16 +26,26 @@ public class GlobalComparatorService {
         return data;
     }
 
+    public List<String> getSalaries(ComparatorRequest request){
+        List<String> data = new ArrayList<>();
+        //data.add(getCOLData(request));
+        data.add(SALCalculatorData1(request));
+        data.add(SALCalculatorData2(request));
+
+        return data;
+    }
+
+
     public List<String> getAllNumbeoData(ComparatorRequest request){
         String URL="http://localhost:8081/allData?cityName="+request.getCity1()+"&cityName2="+request.getCity2()+"&country1="+request.getCountry1()+
                 "&country2="+request.getCountry2();
         return this.restTemplate.getForObject(URL, List.class);
     }
-    @Async
-    public String getCOLData(ComparatorRequest request){
+
+    public NumbeoData getCOLData(ComparatorRequest request){
         String URL="http://localhost:8081/cityComparator?cityName="+request.getCity1()+"&cityName2="+request.getCity2()+"&country1="+request.getCountry1()+
                 "&country2="+request.getCountry2()+"&amount1="+request.getAmountCity1()+"&amount2="+request.getAmountCity2()+"&currency=EUR";
-        return this.restTemplate.getForObject(URL, String.class);
+        return this.restTemplate.getForObject(URL, NumbeoData.class);
     }
 
     @Async
